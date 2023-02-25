@@ -8,8 +8,6 @@ jsonLogHandler = logging.StreamHandler()
 class MyJsonFormatter(jsonlogger.JsonFormatter):
     def add_fields(self, log_record, record, message_dict):
 
-        print("log_record: ", log_record)
-        print("record: ", record)
         super(MyJsonFormatter, self).add_fields(log_record, record, message_dict)
         if not log_record.get('timestamp'):
             # this doesn't use record.created, so it is slightly off
@@ -20,17 +18,15 @@ class MyJsonFormatter(jsonlogger.JsonFormatter):
         else:
             log_record['level'] = record.levelname
 
-        # Add request context information
+
         if has_request_context():
-            log_record['request_id'] = request.headers.get('X-Request-ID', None)
-            log_record['request_path'] = request.path
-            log_record['request_method'] = request.method
-            log_record['request_remote_addr'] = request.remote_addr
-            log_record['request_user_agent'] = request.user_agent.string
-            log_record['request_content_type'] = request.content_type
-            log_record['request_content_length'] = request.content_length
+            log_record['url'] = request.url
+            log_record['method'] = request.method
+            log_record['ip'] = request.remote_addr
+            log_record['user_agent'] = request.user_agent.string
+            log_record['path'] = request.path
 
 
-formatter = MyJsonFormatter('%(timestamp)s %(level)s %(name)s %(message)s')
+formatter = MyJsonFormatter('%(timestamp)s %(level)s %(name)s %(message)s %(url)s %(method)s %(ip)s %(user_agent)s %(path)s')
 
 jsonLogHandler.setFormatter(formatter)
