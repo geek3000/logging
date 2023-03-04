@@ -1,6 +1,7 @@
 ## Objectif
 Le but de ce TP est de mettre en place un système de journalisation pour une application Flask. Nous utiliserons Docker pour lancer l'application et observer les logs.
 
+
 ## Étapes
 
 ### Étape 1 : Création du projet Flask
@@ -16,13 +17,13 @@ cd flask-logging
 2. Créer un environnement virtuel pour le projet :
 
 ```bash
-python -m venv venv
+python -m venv .venv
 ```
 
 3. Activer l'environnement virtuel :
 
 ```bash
-source venv/bin/activate
+source .venv/bin/activate
 ```
 
 4. Installer Flask :
